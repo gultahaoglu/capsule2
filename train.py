@@ -24,7 +24,7 @@ warnings.filterwarnings("ignore")
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--dataset', default ='LAgoruntu', help='path to root dataset')
+parser.add_argument('--dataset', default ='../LAgoruntu', help='path to root dataset')
 parser.add_argument('--train_set', default ='train', help='train set')
 parser.add_argument('--val_set', default ='dev', help='validation set')
 parser.add_argument('--workers', type=int, help='number of data loading workers', default=0)
@@ -34,12 +34,12 @@ parser.add_argument('--niter', type=int, default=70, help='number of epochs to t
 parser.add_argument('--lr', type=float, default=0.0005, help='learning rate')
 parser.add_argument('--beta1', type=float, default=0.9, help='beta1 for adam')
 parser.add_argument('--gpu_id', type=int, default=0, help='GPU ID')
-parser.add_argument('--resume', type=int, default=18, help="choose a epochs to resume from (0 to train from scratch)")
-parser.add_argument('--outf', default='outfold_LA_mel/checkpoints', help='folder to output model checkpoints')
+parser.add_argument('--resume', type=int, default=50, help="choose a epochs to resume from (0 to train from scratch)")
+parser.add_argument('--outf', default='outfold/checkpoints', help='folder to output model checkpoints')
 parser.add_argument('--disable_random', action='store_true', default=False, help='disable randomness for routing matrix')
 parser.add_argument('--dropout', type=float, default=0.05, help='dropout percentage')
 parser.add_argument('--manualSeed', type=int, help='manual seed')
-parser.add_argument('--out_fold', default='outfold_LA_mel')
+parser.add_argument('--out_fold', default='outfold')
 
 
 opt = parser.parse_args()
@@ -114,7 +114,7 @@ if __name__ == "__main__":
         tol_label = np.array([], dtype=float)
         tol_pred = np.array([], dtype=float)
 
-        for img_data, labels_data in tqdm(dataloader_train):
+        for img_data, labels_data in (dataloader_train):
 
             img_label = labels_data.numpy().astype(float)
             optimizer.zero_grad()
@@ -155,7 +155,7 @@ if __name__ == "__main__":
 
         count = 0
         idx_loader, score_loader = [], []
-        for img_data, labels_data in tqdm(dataloader_val):
+        for img_data, labels_data in (dataloader_val):
 
             img_label = labels_data.numpy().astype(float)
             if opt.gpu_id >= 0:
@@ -226,8 +226,5 @@ if __name__ == "__main__":
             
             
             
-            
-            
-            
-       
-   
+
+
